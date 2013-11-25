@@ -1,23 +1,33 @@
 CC=i586-elf-gcc
 AC=i586-elf-as
 LC=i586-elf-gcc
-CFLAGS=-std=gnu99 -ffreestanding -O2 -Wall -Wextra
 LFLAGS=-ffreestanding -O2 -nostdlib
 DEPS = common.h screen.h
-OBJ= common.o kernel.o screen.o boot.s.o 
+OBJ= common.o screen.o kernel.o boot.s.o 
 LINKER= linker.ld
 BIN= myos.bin
+ISODIR=isodir
+ISO=myos.iso
 
-all:  $(OBJ) link
+all:  $(OBJ) link build
 
 %.o: %.c $(DEPS)
-	$(CC) -c @< -o $@ $(CFLAFGS)
+	$(CC) -c $< -o $@ -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 	
 %.s.o: %.s
-	$(AC) @< -o $@
+	$(AC) $< -o $@
 
 link: 
 	$(LC) -T $(LINKER) -o $(BIN) $(LFLAGS) $(OBJ) -lgcc
 	
+build:
+	cp $(BIN) $(ISODIR)/boot/$(BIN)
+	grub-mkrescue -o $(ISO) $(ISODIR)
+
 clean:
-	-rm *.o $(BIN)
+	-rm *.o
+	-rm $(BIN)
+	-rm $(ISO)
+
+run:
+	qemu-system-i386 -cdrom $(ISO)
