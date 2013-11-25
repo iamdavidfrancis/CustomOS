@@ -1,4 +1,8 @@
-
+#if !defined(__cplusplus)
+#include <stdbool.h> /* C doesn't have booleans by default */
+#endif
+#include <stddef.h>
+#include <stdint.h>
 #include "common.h"
 
 /* Check if the compiler thinks we are targeting the wrong OS  */
