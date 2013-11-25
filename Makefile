@@ -21,13 +21,19 @@ link:
 	$(LC) -T $(LINKER) -o $(BIN) $(LFLAGS) $(OBJ) -lgcc
 	
 build:
+	mkdir -p $(ISODIR)
+	mkdir -p $(ISODIR)/boot
 	cp $(BIN) $(ISODIR)/boot/$(BIN)
+	mkdir -p $(ISODIR)/boot/grub
+	cp grub.cfg $(ISODIR)/boot/grub/grub.cfg
 	grub-mkrescue -o $(ISO) $(ISODIR)
+	
 
 clean:
 	-rm *.o
 	-rm $(BIN)
 	-rm $(ISO)
+	-rm -r $(ISODIR)
 
 run:
 	qemu-system-i386 -cdrom $(ISO)
