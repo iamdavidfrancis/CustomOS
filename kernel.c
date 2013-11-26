@@ -2,6 +2,7 @@
 #include "common.h"
 #include "screen.h"
 #include "descriptor_tables.h"
+#include "timer.h"
 
 /* Check if the compiler thinks we are targeting the wrong OS  */
 #if defined(__linux__)
@@ -22,6 +23,5 @@ void kernel_main()
 	/* Currently no support for newlines. \n will do something else. */
 	terminal_writestring("Hello, kernel World!\n");
 
-	asm volatile("int $0x3");
-	asm volatile("int $0x4");
+	init_timer(50);
 }

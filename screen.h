@@ -1,3 +1,6 @@
+#ifndef SCREEN_H
+#define SCREEN_H
+
 #include "common.h"
 
 static const size_t VGA_WIDTH = 80;
@@ -41,3 +44,5 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y);
 void terminal_putchar(char c);
 void terminal_writestring(const char* data);
 void terminal_writedec(uint32_t);
+
+#endif

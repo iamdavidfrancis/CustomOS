@@ -14,7 +14,7 @@ void isr_handler(registers_t regs)
 	terminal_writestring("\n");
 }
 
-void irq_handler(resgisters_t regs)
+void irq_handler(registers_t regs)
 {
 	if(regs.int_no >= 40)
 	{
