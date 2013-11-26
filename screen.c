@@ -25,7 +25,7 @@ static void scroll()
 {
 	uint8_t attributeByte = ( COLOR_BLACK << 4 ) | ( COLOR_WHITE & 0x0F );
 	uint16_t blank = 0x20 | (attributeByte << 8);
-	
+
 	if (terminal_column > VGA_HEIGHT)
 	{
 		int i;
@@ -33,12 +33,12 @@ static void scroll()
 		{
 			terminal_buffer[i] = terminal_buffer[i+VGA_HEIGHT];
 		}
-		
+
 		for(i = VGA_WIDTH*VGA_HEIGHT; i < (VGA_WIDTH+1)*VGA_HEIGHT; i++)
 		{
 			terminal_buffer[i] = blank;
 		}
-		
+
 		terminal_row = VGA_HEIGHT;
 	}
 }
@@ -77,7 +77,7 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
 {
 	const size_t index = y * VGA_WIDTH + x;
 	terminal_buffer[index] = make_vgaentry(c, color);
-}	
+}
 
 void terminal_putchar(char c)
 {
@@ -102,6 +102,7 @@ void terminal_putchar(char c)
 		}
 	}
 
+	scroll();
 	move_cursor();
 }
 
