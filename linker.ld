@@ -1,41 +1,27 @@
-/* The bootloader will look at this image and start execution at the signal 
-   designated as the entry point */
-ENTRY(_start)
-
-/* Tell where the various sections of the object files will be put in the final
-   kernel image. */
+ENTRY(start)
 SECTIONS
 {
-	/* Begin putting sections at 1MiB, a conventional place for kernels to be loaded. */
-	. = 1M;
+  .text 0x100000 :
+  {
+    code = .; _code = .; __code = .;
+    *(.text)
+    . = ALIGN(4096);
+  }
 
-	/* Add multiboot header */
-	.text BLOCK(4K) : ALIGN(4K)
-	{
-		*(.multiboot)
-		*(.text)
-	}
+  .data :
+  {
+     data = .; _data = .; __data = .;
+     *(.data)
+     *(.rodata)
+     . = ALIGN(4096);
+  }
 
-	/* Read-only data */
-	.rodata BLOCK(4K) : ALIGN(4K)
-	{
-		*(.rodata)
-	}
+  .bss :
+  {
+    bss = .; _bss = .; __bss = .;
+    *(.bss)
+    . = ALIGN(4096);
+  }
 
-	/* Read-write data (initialized) */
-	.data BLOCK(4K) : ALIGN(4K)
-	{
-		*(.data)
-	}
-
-	/* Read-write data (uninitialized) and stack */
-	.bss BLOCK(4K) : ALIGN(4K)
-	{
-		*(COMMON)
-		*(.bss)
-		*(.bootstrap_stack)
-	}
-
-	/* The compiler may produce other sections, by default it will put them in
-	   a segment with the same name. Simply add it here as needed. */
-}
+  end = .; _end = .; __end = .;
+} 

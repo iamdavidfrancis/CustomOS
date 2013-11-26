@@ -17,11 +17,10 @@ extern "C"
 
 void kernel_main()
 {
-	init_descriptor_tables();
 	terminal_initialize();
 	/* Currently no support for newlines. \n will do something else. */
 	terminal_writestring("Hello, kernel World!\n");
 
-	asm volatile("int $0x3");
-	asm volatile("int $0x4");
+	asm volatile("int $0x03");
+	asm volatile("int $0x04");
 }
