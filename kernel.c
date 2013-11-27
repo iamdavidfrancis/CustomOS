@@ -19,9 +19,10 @@ extern "C"
 void kernel_main()
 {
 	init_descriptor_tables();
+	init_timer(50);
 	terminal_initialize();
-	/* Currently no support for newlines. \n will do something else. */
+
 	terminal_writestring("Hello, kernel World!\n");
 
-	init_timer(50);
+	
 }
