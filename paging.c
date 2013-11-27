@@ -70,7 +70,7 @@ void alloc_frame(page_t *page, int isKernel, int isWriteable)
 		set_frame(idx*0x1000);
 		page->present = 1;
 		page->rw = (isWriteable)?1:0;
-		page->user = (isUser)?0:1;
+		page->user = (isKernel)?0:1;
 		page->frame = idx;
 	}
 }
