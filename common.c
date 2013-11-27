@@ -1,5 +1,5 @@
 #include "common.h"
-#include "screen.h"
+
 
 void outb(uint16_t port, uint8_t value)
 {
@@ -42,7 +42,7 @@ extern void panic(const char* message, const char* file, uint32_t line)
 	for(;;); // Halt, using an infinite loop
 }
 
-extern void panic_assert(const char *file, u32int line, const char *desc)
+extern void panic_assert(const char *file, uint32_t line, const char *desc)
 {
     // An assertion failed, and we have to panic.
     asm volatile("cli"); // Disable interrupts.
