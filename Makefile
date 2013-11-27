@@ -3,7 +3,7 @@ AC=nasm
 LC=i586-elf-gcc
 LFLAGS=-ffreestanding -O2 -nostdlib
 DEPS = common.h screen.h descriptor_tables.h isr.h timer.h
-OBJ= common.o screen.o descriptor_tables.o kernel.o isr.o timer.o interrupt.s.o gdt.s.o boot.s.o
+OBJ= boot.s.o common.o screen.o descriptor_tables.o kernel.o isr.o timer.o interrupt.s.o gdt.s.o
 LINKER= linker.ld
 BIN= myos.bin
 ISODIR=isodir
@@ -40,3 +40,6 @@ run:
 
 run-int:
 	qemu-system-i386 -d int -cdrom $(ISO)
+
+run-vnc:
+	qemu-system-i386 -d cpu_reset -cdrom $(ISO) -vnc :3 -m 384
