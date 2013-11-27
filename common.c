@@ -1,4 +1,5 @@
 #include "common.h"
+#include "screen.h"
 
 void outb(uint16_t port, uint8_t value)
 {
@@ -23,4 +24,36 @@ void memset(uint8_t *dest, uint8_t val, uint32_t len)
 {
 	uint8_t *temp = (uint8_t*) dest;
 	for(; len != 0; len--) *temp++ = val;
+}
+
+extern void panic(const char* message, const char* file, uint32_t line)
+{
+	// We hit an error
+	asm volatile("cli"); // Disable interrupts
+	
+	terminal_writestring("PANIC(");
+	terminal_writestring(message);
+	terminal_writestring(") at");
+	terminal_writestring(file);
+	terminal_writestring(": ");
+	terminal_writedec(line);
+	terminal_writestring("\n");
+	
+	for(;;); // Halt, using an infinite loop
+}
+
+extern void panic_assert(const char *file, u32int line, const char *desc)
+{
+    // An assertion failed, and we have to panic.
+    asm volatile("cli"); // Disable interrupts.
+
+    monitor_write("ASSERTION-FAILED(");
+    monitor_write(desc);
+    monitor_write(") at ");
+    monitor_write(file);
+    monitor_write(":");
+    monitor_write_dec(line);
+    monitor_write("\n");
+    // Halt by going into an infinite loop.
+    for(;;);
 }
