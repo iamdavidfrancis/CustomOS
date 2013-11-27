@@ -142,3 +142,33 @@ void terminal_writedec(uint32_t num)
 
 	terminal_writestring(c2);
 }
+
+void terminal_writehex(uint32_t n)
+{
+	int32_t tmp;
+	
+	terminal_writestring("0x");
+	
+	char noZeroes = 1;
+	
+	int i;
+	for(i=28; i > 0; i -= 4)
+	{
+		tmp = (n >> i) & 0xF;
+		if(tmp == 0 && noZeroes != 0)
+		{
+			continue;
+		}
+		
+		if(tmp > 0xA)
+		{
+			noZeroes = 0;
+			terminal_putchar(tmp-0xA+'a');
+		}
+		else
+		{
+			noZeroes = 0;
+			terminal_putchar(tmp+'0');
+		}
+	}
+}

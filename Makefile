@@ -2,8 +2,8 @@ CC=i586-elf-gcc
 AC=nasm
 LC=i586-elf-gcc
 LFLAGS=-ffreestanding -O2 -nostdlib
-DEPS = common.h screen.h descriptor_tables.h isr.h timer.h kheap.h
-OBJ= boot.s.o common.o screen.o descriptor_tables.o kheap.o kernel.o isr.o timer.o interrupt.s.o gdt.s.o 
+DEPS = common.h screen.h descriptor_tables.h isr.h timer.h kheap.h paging.h
+OBJ= boot.s.o common.o screen.o descriptor_tables.o kheap.o paging.h kernel.o isr.o timer.o interrupt.s.o gdt.s.o 
 
 LINKER= linker.ld
 BIN= myos.bin
