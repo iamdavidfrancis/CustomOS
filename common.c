@@ -47,13 +47,13 @@ extern void panic_assert(const char *file, uint32_t line, const char *desc)
     // An assertion failed, and we have to panic.
     asm volatile("cli"); // Disable interrupts.
 
-    monitor_write("ASSERTION-FAILED(");
-    monitor_write(desc);
-    monitor_write(") at ");
-    monitor_write(file);
-    monitor_write(":");
-    monitor_write_dec(line);
-    monitor_write("\n");
+    terminal_writestring("ASSERTION-FAILED(");
+    terminal_writestring(desc);
+    terminal_writestring(") at ");
+    terminal_writestring(file);
+    terminal_writestring(":");
+    terminal_writestring(line);
+    terminal_writestring("\n");
     // Halt by going into an infinite loop.
     for(;;);
 }
