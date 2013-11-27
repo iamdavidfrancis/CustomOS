@@ -31,9 +31,9 @@ static void clear_frame(uint32_t frame_addr)
 
 static uint32_t test_frame(uint32_t frame_addr)
 {
-	u32int frame = frame_addr/0x1000;
-    u32int idx = INDEX_FROM_BIT(frame);
-    u32int off = OFFSET_FROM_BIT(frame);
+	uint32_t frame = frame_addr/0x1000;
+    uint32_t idx = INDEX_FROM_BIT(frame);
+    uint32_t off = OFFSET_FROM_BIT(frame);
     return (frames[idx] & (0x1 << off));
 }
 
@@ -77,7 +77,7 @@ void alloc_frame(page_t *page, int isKernel, int isWriteable)
 
 void free_frame(page_t *page)
 {
-    u32int frame;
+    uint32_t frame;
     if (!(frame=page->frame))
     {
         return;
@@ -131,14 +131,14 @@ page_t *get_page(uint32_t address, int make, page_directory_t *dir)
 	// Turn the address into an index.
     address /= 0x1000;
     // Find the page table containing this address.
-    u32int table_idx = address / 1024;
+    uint32_t table_idx = address / 1024;
     if (dir->tables[table_idx]) // If this table is already assigned
     {
         return &dir->tables[table_idx]->pages[address%1024];
     }
     else if(make)
     {
-        u32int tmp;
+        uint32_t tmp;
         dir->tables[table_idx] = (page_table_t*)kmalloc_ap(sizeof(page_table_t), &tmp);
         dir->tablesPhysical[table_idx] = tmp | 0x7; // PRESENT, RW, US.
         return &dir->tables[table_idx]->pages[address%1024];
