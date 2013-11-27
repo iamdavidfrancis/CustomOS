@@ -29,7 +29,7 @@ typedef struct page_directory
 	uint32_t physicalAddress; // of the tablesPhysical array
 } page_directory_t;
 
-void initialize_paging;
+void initialize_paging();
 page_t *get_page(uint32_t address, int make, page_directory_t *dir);
 
 void page_fault(registers_t regs);
